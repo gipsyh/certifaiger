@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull submodules
+        run: git submodule update --init --recursive
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build docker image
+        run: |
+          docker build . -t certifaiger
+      - name: Deploy
+        run: |
+          docker tag certifaiger ghcr.io/${{ github.repository_owner }}/certifaiger:latest
+          docker push ghcr.io/${{ github.repository_owner }}/certifaiger:latest
