@@ -165,20 +165,20 @@ auto shared_inputs_latches(const aiger *model, const aiger *witness) {
     else
       extended.push_back(l);
   }
-  if (shared.empty()) {
-    MSG << "No witness mapping found, using default\n";
-    const unsigned n = std::min(model->num_inputs, witness->num_inputs);
-    const unsigned m = std::min(model->num_latches, witness->num_latches);
-    for (unsigned i = 0; i < n; ++i)
-      shared.emplace_back(model->inputs[i].lit, witness->inputs[i].lit);
-    for (unsigned i = 0; i < m; ++i)
-      shared.emplace_back(model->latches[i].lit, witness->latches[i].lit);
-    extended.clear();
-    for (unsigned i = n; i < model->num_inputs; ++i)
-      extended.push_back(model->inputs[i].lit);
-    for (unsigned i = m; i < model->num_latches; ++i)
-      extended.push_back(model->latches[i].lit);
-  }
+  // if (shared.empty()) {
+  //   MSG << "No witness mapping found, using default\n";
+  //   const unsigned n = std::min(model->num_inputs, witness->num_inputs);
+  //   const unsigned m = std::min(model->num_latches, witness->num_latches);
+  //   for (unsigned i = 0; i < n; ++i)
+  //     shared.emplace_back(model->inputs[i].lit, witness->inputs[i].lit);
+  //   for (unsigned i = 0; i < m; ++i)
+  //     shared.emplace_back(model->latches[i].lit, witness->latches[i].lit);
+  //   extended.clear();
+  //   for (unsigned i = n; i < model->num_inputs; ++i)
+  //     extended.push_back(model->inputs[i].lit);
+  //   for (unsigned i = m; i < model->num_latches; ++i)
+  //     extended.push_back(model->latches[i].lit);
+  // }
   return std::tuple{shared, extended};
 }
 
